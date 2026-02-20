@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime
 from datetime import datetime
 from .database import Base
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 
 class User(Base):
     __tablename__ = "users"
@@ -11,6 +12,8 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     role = Column(String, default="member")
     created_at = Column(DateTime, default=datetime.utcnow)
+    projects = relationship("ProjectMember", backref="user")
+
 
 class Project(Base):
     __tablename__ = "projects"
@@ -21,6 +24,8 @@ class Project(Base):
     github_repo = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
+    members = relationship("ProjectMember", backref="project")
+
 
 class ProjectMember(Base):
     __tablename__ = "project_members"

@@ -1,6 +1,13 @@
+# Environment files
 .env
 backend/.env
-__pycache__/
-*.pyc
+
+# Database files
 codesync.db
 backend/codesync.db
+
+# Python cache
+__pycache__/
+*.pyc
+backend/app/__pycache__/
+backend/app/routes/__pycache__/

@@ -24,6 +24,10 @@ class UserCreate(BaseModel):
 
 @router.post("/")
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    existing = db.query(User).filter(User.email == user.email).first()
+    if existing:
+        return {"error": "Email already exists"}
+
     new_user = User(name=user.name, email=user.email)
     db.add(new_user)
     db.commit()
